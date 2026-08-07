@@ -106,6 +106,13 @@ function getProficiencyBonus(level, rank) {
  */
 function getCoverBonus(behindObstacle, takingCover) {
   // TODO
+  if (behindObstacle === true && takingCover === false) {
+    return 2;
+  } else if (behindObstacle === false && takingCover === true) {
+    return 4;
+  } else {
+    return 0;
+  }
 }
 
 /**
