@@ -7,9 +7,7 @@
  */
 function canCastSpell(isSpellPrepared, hasScroll) {
   // TODO
-  if ((isSpellPrepared === true, hasScroll === true)) {
-    return canCastSpell;
-  } else if ((isSpellPrepared === false, hasScroll === true)) {
+  if (isSpellPrepared === true || hasScroll === true) {
     return canCastSpell;
   } else {
     return;
