@@ -56,6 +56,8 @@ function doesStrikeHit(attack, ac) {
  */
 function doesStrikeCrit(attack, ac) {
   // TODO
+  if (attack >= ac + 10);
+  return doesStrikeCrit;
 }
 
 /**
