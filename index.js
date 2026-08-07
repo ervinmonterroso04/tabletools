@@ -7,11 +7,7 @@
  */
 function canCastSpell(isSpellPrepared, hasScroll) {
   // TODO
-  if (isSpellPrepared === true || hasScroll === true) {
-    return canCastSpell;
-  } else {
-    return;
-  }
+  return isSpellPrepared || hasScroll;
 }
 
 /**
@@ -23,14 +19,9 @@ function canCastSpell(isSpellPrepared, hasScroll) {
  */
 function isHidden(hiding, aware) {
   // TODO
-  if (hiding === true || aware === !true) {
-    return isHidden;
-  } else if (hiding === false || aware === !true) {
-    return isHidden;
-  } else {
-    return;
-  }
+  return hiding || !aware;
 }
+
 /**
  * A strike hits if the attack value is greater than or equal
  * to the target's armor class (AC).
@@ -40,11 +31,7 @@ function isHidden(hiding, aware) {
  */
 function doesStrikeHit(attack, ac) {
   // TODO
-  if (attack >= ac) {
-    return doesStrikeHit;
-  } else {
-    return;
-  }
+  return attack >= ac;
 }
 
 /**
@@ -56,8 +43,7 @@ function doesStrikeHit(attack, ac) {
  */
 function doesStrikeCrit(attack, ac) {
   // TODO
-  if (attack >= ac + 10);
-  return doesStrikeCrit;
+  return attack >= ac + 10;
 }
 
 /**
@@ -147,3 +133,119 @@ function canSee(light, vision) {
 function getStrikeDamage(attack, ac, damage) {
   // TODO
 }
+
+function assertEqual(actual, expected, description) {
+  if (actual === expected) {
+    console.log(`✅ PASS: ${description}`);
+  } else {
+    console.log(`❌ FAIL: ${description}`);
+    console.log(`   Expected: ${expected}`);
+    console.log(`   Actual:   ${actual}`);
+  }
+}
+
+console.log("--- canCastSpell ---");
+assertEqual(canCastSpell(true, false), true, "prepared spell can be cast");
+assertEqual(
+  canCastSpell(false, true),
+  true,
+  "unprepared spell can be cast from a scroll",
+);
+assertEqual(
+  canCastSpell(false, false),
+  false,
+  "unprepared spell without a scroll cannot be cast",
+);
+
+console.log("--- isHidden ---");
+assertEqual(isHidden(true, true), true, "actively hiding creature is hidden");
+assertEqual(
+  isHidden(false, false),
+  true,
+  "creature is hidden when observer is unaware",
+);
+assertEqual(
+  isHidden(false, true),
+  false,
+  "creature is not hidden when not hiding and observer is aware",
+);
+
+console.log("--- doesStrikeHit ---");
+assertEqual(doesStrikeHit(15, 15), true, "attack equal to AC hits");
+assertEqual(doesStrikeHit(18, 15), true, "attack greater than AC hits");
+assertEqual(doesStrikeHit(14, 15), false, "attack less than AC misses");
+
+console.log("--- doesStrikeCrit ---");
+assertEqual(
+  doesStrikeCrit(25, 15),
+  true,
+  "attack 10 greater than AC is a crit",
+);
+assertEqual(
+  doesStrikeCrit(26, 15),
+  true,
+  "attack more than 10 greater than AC is a crit",
+);
+assertEqual(
+  doesStrikeCrit(24, 15),
+  false,
+  "attack less than 10 greater than AC is not a crit",
+);
+
+console.log("--- heal ---");
+assertEqual(heal(20, 10, 5), 15, "healing increases current HP");
+assertEqual(heal(20, 18, 5), 20, "healing cannot exceed max HP");
+assertEqual(heal(20, 20, 5), 20, "healing at full HP stays at max HP");
+
+console.log("--- getProficiencyBonus ---");
+assertEqual(getProficiencyBonus(5, "untrained"), 0, "untrained bonus is 0");
+assertEqual(getProficiencyBonus(5, "trained"), 7, "trained bonus is level + 2");
+assertEqual(
+  getProficiencyBonus(5, "legendary"),
+  13,
+  "legendary bonus is level + 8",
+);
+
+console.log("--- getCoverBonus ---");
+assertEqual(getCoverBonus(true, false), 2, "behind an obstacle gives +2");
+assertEqual(
+  getCoverBonus(true, true),
+  4,
+  "taking cover behind an obstacle gives +4",
+);
+assertEqual(
+  getCoverBonus(false, false),
+  0,
+  "not behind an obstacle gives no bonus",
+);
+
+console.log("--- getRemainingHp ---");
+assertEqual(getRemainingHp(20, 15, 5), 10, "damage reduces current HP");
+assertEqual(
+  getRemainingHp(20, 10, 15),
+  0,
+  "HP drops to 0 when damage exceeds current HP",
+);
+assertEqual(
+  getRemainingHp(20, 20, 40),
+  -1,
+  "damage of double max HP kills instantly",
+);
+
+console.log("--- canSee ---");
+assertEqual(
+  canSee("bright", "average"),
+  true,
+  "average vision can see in bright light",
+);
+assertEqual(
+  canSee("dim", "low-light"),
+  true,
+  "low-light vision can see in dim light",
+);
+assertEqual(canSee("dark", "dark"), true, "darkvision can see in dark");
+
+console.log("--- getStrikeDamage ---");
+assertEqual(getStrikeDamage(14, 15, 8), 0, "miss deals 0 damage");
+assertEqual(getStrikeDamage(15, 15, 8), 8, "hit deals normal damage");
+assertEqual(getStrikeDamage(25, 15, 8), 16, "crit deals double damage");
