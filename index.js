@@ -56,7 +56,11 @@ function doesStrikeCrit(attack, ac) {
  */
 function heal(maxHp, currentHp, healAmount) {
   // TODO
-  return (maxHp = currentHp + healAmount && currentHp + healAmount > !maxHp);
+  if (maxHp >= currentHp + healAmount) {
+    return currentHp + healAmount;
+  } else if (maxHp < currentHp + healAmount) {
+    return maxHp;
+  }
 }
 
 /**
@@ -77,6 +81,7 @@ function heal(maxHp, currentHp, healAmount) {
  */
 function getProficiencyBonus(level, rank) {
   // TODO
+  return rank + level;
 }
 
 /**
