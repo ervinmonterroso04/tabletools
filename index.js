@@ -23,8 +23,14 @@ function canCastSpell(isSpellPrepared, hasScroll) {
  */
 function isHidden(hiding, aware) {
   // TODO
+  if (hiding === true || aware === !true) {
+    return isHidden;
+  } else if (hiding === false || aware === !true) {
+    return isHidden;
+  } else {
+    return;
+  }
 }
-
 /**
  * A strike hits if the attack value is greater than or equal
  * to the target's armor class (AC).
@@ -34,6 +40,11 @@ function isHidden(hiding, aware) {
  */
 function doesStrikeHit(attack, ac) {
   // TODO
+  if (attack >= ac) {
+    return doesStrikeHit;
+  } else {
+    return;
+  }
 }
 
 /**
